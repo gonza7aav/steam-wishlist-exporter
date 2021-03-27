@@ -11,11 +11,7 @@ const getWishlist = require("./getWishlist");
 const getGame = require("./getGame");
 
 const main = async () => {
-  console.log("   ***************************");
-  console.log("   * steam-wishlist-exporter *");
-  console.log("   ***************************");
-
-  await showWarning();
+  if (config.SHOW_WARNINGS) await showWarning();
 
   let { APICalls, reset, username, wishlist } = await readTempFile();
 
@@ -24,7 +20,10 @@ const main = async () => {
 
   if (!wasAPIReseted(reset)) {
     // check and warn about exceeded the api call limit
-    if (global.APICalls + wishlist.length >= config.MAX_API_CALLS_PER_DAY) {
+    if (
+      config.SHOW_WARNINGS &&
+      global.APICalls + wishlist.length >= config.MAX_API_CALLS_PER_DAY
+    ) {
       console.log("\nYou will exceed the daily limit of API calls");
       console.log("Any request made over the limit could return wrong data");
       let answer = await askQuestion("Do you want to continue? (y/n) ");
