@@ -29,12 +29,21 @@ const getGame = async (appid) => {
       appDetails.developers,
       appDetails.publishers,
       appDetails.release_date.date || null,
-      appDetails.is_free ? 0 : appDetails.price_overview.initial / 100
+      getPrice(appDetails.is_free, appDetails.price_overview)
     );
   } catch (error) {
     global.pendingGames.push(appid);
     console.error(error);
   }
+};
+
+const getPrice = (isFree, priceOverview) => {
+  if (isFree) return 0;
+
+  // this is for game that aren't for selling
+  if (typeof priceOverview == undefined) return -1;
+
+  return priceOverview.initial / 100;
 };
 
 module.exports = getGame;
