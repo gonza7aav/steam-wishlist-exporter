@@ -1,5 +1,6 @@
 {
   "comment0": "this is the limit set by the Steam Web API Terms of Use (Last updated July 2010) https://steamcommunity.com/dev/apiterms",
   "MAX_API_CALLS_PER_DAY": 100000,
+  "WAITING_TIME": 100,
   "SHOW_WARNINGS": false
 }

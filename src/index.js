@@ -4,6 +4,7 @@ const showWarning = require("./showWarning");
 const readTempFile = require("./readTempFile");
 const wasAPIReseted = require("./wasAPIReseted");
 const askQuestion = require("./askQuestion");
+const sleep = require("./sleep");
 const writeWishlistFile = require("./writeWishlistFile");
 const writeTempFile = require("./writeTempFile");
 
@@ -50,6 +51,7 @@ const main = async () => {
     for await (let appid of wishlist) {
       let game = await getGame(appid);
       games.push(game);
+      await sleep(config.WAITING_TIME);
     }
 
     // once you have the game details, we will write a file
