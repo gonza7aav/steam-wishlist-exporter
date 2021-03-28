@@ -9,7 +9,7 @@ const writeWishlistFile = async (username, games) => {
   let today = new Date();
 
   let aux = readWishlistFile(username);
-  aux.date = today.toISOString();
+  aux.dateExported = today.toISOString();
   aux.games = [...aux.games, ...games];
 
   console.log("\nWriting wishlist file...");

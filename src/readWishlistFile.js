@@ -2,13 +2,13 @@ const readWishlistFile = (_username) => {
   try {
     let {
       username,
-      date,
+      dateExported,
       games,
     } = require(`../results/${_username}_wishlist.json`);
 
     return {
       username: _username,
-      date: date,
+      dateExported: dateExported,
       games: games,
     };
   } catch (error) {
@@ -16,7 +16,7 @@ const readWishlistFile = (_username) => {
     if (error.code == "MODULE_NOT_FOUND") {
       return {
         username: _username,
-        date: "",
+        dateExported: "",
         games: [],
       };
     } else {
