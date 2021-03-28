@@ -16,7 +16,7 @@ const getWishlist = async (username) => {
     if (typeof res.data == undefined || res.data == null)
       throw "\nCan't access the wishlist page";
 
-    console.log(`\n${username}'s wishlist page fetched`);
+    console.log(`${username}'s wishlist page fetched`);
 
     // we have the string 'page' with the page content
     // we will use eval() in order to get the wishlist array called 'g_rgWishlistData'
