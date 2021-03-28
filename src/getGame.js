@@ -42,7 +42,7 @@ const getPrice = (isFree, priceOverview) => {
   if (isFree) return 0;
 
   // this is for game that aren't for selling
-  if (typeof priceOverview == undefined) return -1;
+  if (typeof priceOverview == undefined || priceOverview == null) return -1;
 
   return priceOverview.initial / 100;
 };
