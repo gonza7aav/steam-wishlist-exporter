@@ -15,26 +15,28 @@ A tool to export the wishlist of a _Steam_ account
 
 ## 🚧 Prerequisites
 
-- Have installed _[Node.js](https://nodejs.org/)_
-- Download the repository
-
-If you have _Git_, you can clone it with:
-
-```
-git clone https://github.com/gonza7aav/steam-wishlist-exporter.git
-```
+- _[Node.js](https://nodejs.org/)_
+- (optional) _[Git](https://git-scm.com/)_
 
 ## 🛠️ Install
 
-1. From the repository's folder, in order to install the dependencies, run:
+1. Download this repository
 
-```
-npm intall
-```
+   If you have _Git_, you can clone it with:
+
+   ```
+   git clone https://github.com/gonza7aav/steam-wishlist-exporter.git
+   ```
+
+2. Install the dependencies with:
+
+   ```
+   npm intall
+   ```
 
 ## 🚀 Usage
 
-Before running, you should read the **_Steam_ Web API Terms of Use** and check the values from the `config.json` file.
+Before exporting, you should read the **[_Steam_ Web API Terms of Use](https://steamcommunity.com/dev/apiterms)** and check the values from the `config.json` file.
 
 I am not responsible for any bans by Steam.
 
