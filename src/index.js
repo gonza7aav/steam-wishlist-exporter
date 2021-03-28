@@ -13,30 +13,39 @@ const getWishlist = require("./getWishlist");
 const getGame = require("./getGame");
 
 const main = async () => {
-  if (config.SHOW_WARNINGS) await showWarning();
+  await showWarning();
 
   let { APICalls, reset, username, wishlist } = await readTempFile();
 
   // APICalls will be used in lot of file, then will be global
   global.APICalls = APICalls;
 
-  if (!wasAPIReseted(reset)) {
-    // check and warn about exceeded the api call limit
-    if (
-      config.SHOW_WARNINGS &&
-      global.APICalls + wishlist.length >= config.MAX_API_CALLS_PER_DAY
-    ) {
-      console.log("\nYou will exceed the daily limit of API calls");
-      console.log("Any request made over the limit could return wrong data");
-      let answer = await askQuestion("Do you want to continue? (y/n) ");
-      if (!["y", "yes"].includes(answer.toLowerCase().trim())) process.exit(0);
-    }
+  // init the global variable which contains the appid that get errors
+  global.pendingGames = [];
+
+  // if the time limit has passed, reset the counter
+  if (wasAPIReseted(reset)) global.APICalls = 0;
+
+  // check the api limit and do not exceed it
+  if (global.APICalls + wishlist.length > config.MAX_API_CALLS_PER_DAY) {
+    // get the ones that won't be processed to save them for later
+    let exceed = wishlist.slice(config.MAX_API_CALLS_PER_DAY - global.APICalls);
+    exceed.map((appid) => global.pendingGames.push(appid));
+    console.log(
+      `\n${exceed.length} games will be saved for later in order to not exceed the API limit`
+    );
+
+    // get the ones that will be processed right now
+    wishlist = wishlist.slice(
+      0,
+      config.MAX_API_CALLS_PER_DAY - global.APICalls
+    );
   }
 
   try {
     // if this is not the continuation of the previous run, ask for username
     if (wishlist.length == 0) {
-      let answer = await askQuestion("Enter the SteamID: ");
+      let answer = await askQuestion("\nEnter the SteamID: ");
       username = answer;
 
       // get all the appids of the wishlisted games
