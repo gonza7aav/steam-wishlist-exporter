@@ -9,10 +9,6 @@
 
 A tool to export the wishlist of a _Steam_ account
 
-<!--
-## 💡 Motivation
--->
-
 ## 🚧 Prerequisites
 
 - _[Node.js](https://nodejs.org/)_
@@ -38,7 +34,7 @@ A tool to export the wishlist of a _Steam_ account
 
 Before exporting, you should read the **[_Steam_ Web API Terms of Use](https://steamcommunity.com/dev/apiterms)** and check the values from the `config.json` file.
 
-I am not responsible for any bans by Steam.
+I am not responsible for any bans by _Steam_.
 
 To start the program, run:
 
@@ -46,7 +42,36 @@ To start the program, run:
 npm start
 ```
 
-Then, follow the instruction in the console.
+Then, follow the instruction on the console.
+
+## 📂 Results
+
+After execution, you will find two additions: a folder and a file.
+
+In the `results` folder, you will find all the wishlists exported. You should be able to locate the desired one by the username in the filename.
+
+These files has the following structure
+
+```json
+{
+  "username": "username",
+  "dateExported": "2000-01-01T00:00:00.000Z",
+  "games": [
+    {
+      "appid": 10,
+      "title": "Counter-Strike",
+      "developers": ["Valve"],
+      "publishers": ["Valve"],
+      "releaseDate": "2000-11-01",
+      "price": 129.99,
+      "url": "https://store.steampowered.com/app/10"
+    },
+    ...
+  ]
+}
+```
+
+On the other hand, `temp.json` contains the API calls made, the time they will restart, and the games that failed. With this we can check that the limit established by **[_Steam_ Web API Terms of Use](https://steamcommunity.com/dev/apiterms)** is not exceeded. As well as being able to resume the execution on another day once the limit has been reached.
 
 ## 📝 License
 
