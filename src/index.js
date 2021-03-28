@@ -50,7 +50,7 @@ const main = async () => {
     let games = [];
     for await (let appid of wishlist) {
       let game = await getGame(appid);
-      games.push(game);
+      if (game != null) games.push(game);
       await sleep(config.WAITING_TIME);
     }
 

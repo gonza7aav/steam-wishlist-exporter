@@ -33,6 +33,7 @@ const getGame = async (appid) => {
     );
   } catch (error) {
     global.pendingGames.push(appid);
+    console.error(`${appid} added to pendingGames`);
     console.error(error);
   }
 };
