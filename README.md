@@ -12,7 +12,7 @@ A tool to export the wishlist of a _Steam_ account
 ## 🚧 Prerequisites
 
 - _[Node.js](https://nodejs.org/)_
-- (optional) _[Git](https://git-scm.com/)_
+- _[Git](https://git-scm.com/)_ (optional)
 
 ## 🛠️ Install
 
@@ -78,4 +78,4 @@ On the other hand, `temp.json` contains the API calls made, the time they will r
 <!-- https://choosealicense.com/ -->
 
 Copyright © 2021 _Aguirre Gonzalo Adolfo_.
-This project is _[MIT](LICEnSE)_ licensed.
+This project is _[MIT](LICENSE)_ licensed.
