@@ -2,8 +2,12 @@
 
 <!-- https://shields.io -->
 
+<div align="center">
+
 ![GitHub repository size](https://img.shields.io/github/repo-size/gonza7aav/steam-wishlist-exporter?label=size&color=informational)
 ![Repository license](https://img.shields.io/github/license/gonza7aav/steam-wishlist-exporter?color=informational)
+
+</div>
 
 <!-- summary -->
 
@@ -20,13 +24,13 @@ A tool to export the wishlist of a _Steam_ account
 
    If you have _Git_, you can clone it with:
 
-   ```
+   ```console
    git clone https://github.com/gonza7aav/steam-wishlist-exporter.git
    ```
 
 2. Install the dependencies with:
 
-   ```
+   ```console
    npm intall
    ```
 
@@ -38,7 +42,7 @@ I am not responsible for any bans by _Steam_.
 
 To start the program, run:
 
-```
+```console
 npm start
 ```
 
@@ -79,3 +83,9 @@ On the other hand, `temp.json` contains the API calls made, the time they will r
 
 Copyright © 2021 _Aguirre Gonzalo Adolfo_.
 This project is _[MIT](LICENSE)_ licensed.
+
+---
+
+<div align="center">
+Developed with ❤️ in Argentina 🇦🇷
+</div>
