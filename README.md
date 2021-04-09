@@ -58,7 +58,7 @@ In the `results` folder, you will find all the wishlists exported. You should be
 
 These files has the following structure
 
-```json
+```js
 {
   "username": "username",
   "dateExported": "2000-01-01T00:00:00.000Z",
