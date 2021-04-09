@@ -1,4 +1,4 @@
-const fsp = require("fs/promises");
+const fs = require('fs/promises');
 
 const writeTempFile = async (username) => {
   // tomorrow = today in ms + 1 day in ms
@@ -11,11 +11,11 @@ const writeTempFile = async (username) => {
     wishlist: [...global.pendingGames],
   };
 
-  console.log("Writing temp file...");
+  console.log('\nWriting temp file...');
 
-  await fsp.writeFile("temp.json", JSON.stringify(aux, null, 2));
+  await fs.writeFile('temp.json', JSON.stringify(aux, null, 2));
 
-  console.log("Writing temp file finished");
+  console.log('Writing temp file finished');
 };
 
 module.exports = writeTempFile;

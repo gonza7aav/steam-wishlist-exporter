@@ -8,7 +8,7 @@
 //   wishlist : the list of appid which haven't been exported.
 //     In case that there is no pending games, it must be the empty array [].
 
-const askQuestion = require("./askQuestion");
+const fs = require('fs/promises');
 
 const readTempFile = async () => {
   try {

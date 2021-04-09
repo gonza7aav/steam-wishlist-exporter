@@ -1,6 +1,6 @@
 // returns the games appid in the user's wishlist as an array
 
-const axios = require("axios").default;
+const axios = require('axios').default;
 
 const getWishlist = async (username) => {
   global.APICalls++;
@@ -26,14 +26,13 @@ const getWishlist = async (username) => {
     // then we need to eval the '[...]' part
 
     // looking for the variable definition, in order to shorter the range of search
-    let indexStart = res.data.indexOf("g_rgWishlistData");
-    if (indexStart == -1) throw "g_rgWishlistData not found";
+    if (indexStart == -1) throw 'g_rgWishlistData not found';
     let wishlistRaw = res.data.slice(indexStart);
 
     // we add 1 to the upper limit in order to include the ']' character
     wishlistRaw = wishlistRaw.slice(
-      wishlistRaw.indexOf("["),
-      wishlistRaw.indexOf("]") + 1
+      wishlistRaw.indexOf('['),
+      wishlistRaw.indexOf(']') + 1
     );
 
     // check the result with a regular expression

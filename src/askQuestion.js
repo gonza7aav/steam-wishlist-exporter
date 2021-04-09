@@ -1,6 +1,6 @@
 // this module will be used to ask questions in console
 
-const readline = require("readline");
+const readline = require('readline');
 
 // init the console interface
 const rl = readline.createInterface({

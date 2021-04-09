@@ -1,4 +1,4 @@
-const readWishlistFile = (_username) => {
+const fs = require('fs/promises');
   try {
     let {
       username,

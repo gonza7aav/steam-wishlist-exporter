@@ -2,8 +2,8 @@
 // yes: read, append, write
 // no: create, write
 
-const readWishlistFile = require("./readWishlistFile");
-const fsp = require("fs/promises");
+const readWishlistFile = require('./readWishlistFile');
+const fs = require('fs/promises');
 
 const writeWishlistFile = async (username, games) => {
   let today = new Date();
@@ -12,17 +12,17 @@ const writeWishlistFile = async (username, games) => {
   aux.dateExported = today.toISOString();
   aux.games = [...aux.games, ...games];
 
-  console.log("\nWriting wishlist file...");
+  console.log('\nWriting wishlist file...');
 
   // catch the exception when the folder was already created
-  await fsp.mkdir("results").catch(() => {});
+  await fs.mkdir('results').catch(() => {});
 
   await fsp.writeFile(
     `results/${username}_wishlist.json`,
     JSON.stringify(aux, null, 2)
   );
 
-  console.log("Writing wishlist file finished");
+  console.log('Writing wishlist file finished');
 };
 
 module.exports = writeWishlistFile;

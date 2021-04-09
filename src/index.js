@@ -1,16 +1,14 @@
-const config = require("../config.json");
+const config = require('../config.json');
 
-const showWarning = require("./showWarning");
-const readTempFile = require("./readTempFile");
-const wasAPIReseted = require("./wasAPIReseted");
-const askQuestion = require("./askQuestion");
-const getRunTime = require("./getRunTime");
-const sleep = require("./sleep");
-const writeWishlistFile = require("./writeWishlistFile");
-const writeTempFile = require("./writeTempFile");
-
-const getWishlist = require("./getWishlist");
-const getGame = require("./getGame");
+const showWarning = require('./showWarning');
+const readTempFile = require('./readTempFile');
+const askQuestion = require('./askQuestion');
+const getWishlist = require('./getWishlist');
+const getRunTime = require('./getRunTime');
+const getGame = require('./getGame');
+const sleep = require('./sleep');
+const writeTempFile = require('./writeTempFile');
+const writeWishlistFile = require('./writeWishlistFile');
 
 const main = async () => {
   await showWarning();
@@ -54,10 +52,9 @@ const main = async () => {
 
     // show finish time
     console.log(`\nThis will run for ${getRunTime(wishlist.length)}`);
-    await askQuestion("Press Enter to continue");
+    await askQuestion('Press Enter to continue');
 
-    // having the wishlist array ready, fetch them
-    console.log("\nStart getting games info");
+    console.log('\nStart getting games info');
     let games = [];
     for await (let appid of wishlist) {
       let game = await getGame(appid);

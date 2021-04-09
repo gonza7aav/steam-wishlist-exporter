@@ -1,5 +1,5 @@
-const axios = require("axios").default;
-const Game = require("./Game");
+const axios = require('axios').default;
+const Game = require('./Game');
 
 const getGame = async (appid) => {
   global.APICalls++;
