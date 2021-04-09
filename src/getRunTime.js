@@ -1,6 +1,6 @@
 const { WAITING_TIME } = require('../config.json');
 
-const getRunTime = (n) => {
+const getRunTime = (n = 0) => {
   let total = n * WAITING_TIME;
   let rest;
 

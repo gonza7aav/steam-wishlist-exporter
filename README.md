@@ -36,9 +36,9 @@ A tool to export the wishlist of a _Steam_ account
 
 ## 🚀 Usage
 
-Before exporting, you should read the **[_Steam_ Web API Terms of Use](https://steamcommunity.com/dev/apiterms)** and check the values from the `config.json` file.
+Before exporting, you should read the **[_Steam_ Web API Terms of Use](https://steamcommunity.com/dev/apiterms)** and double check the values from the `config.json` file.
 
-I am not responsible for any bans by _Steam_.
+**I am not responsible for any ban by _Steam_**
 
 To start the program, run:
 
@@ -47,6 +47,8 @@ npm start
 ```
 
 Then, follow the instruction on the console.
+
+The first time you export a user's wishlist, a new file will be created. Thereafter it will update the file with the new games wishlisted and the games that could not be saved before.
 
 ## 📂 Results
 
@@ -60,22 +62,35 @@ These files has the following structure
 {
   "username": "username",
   "dateExported": "2000-01-01T00:00:00.000Z",
+
+  // an array of appid that failed
+  "errors": [207210,...],
+
+  // an array of game objects
   "games": [
     {
       "appid": 10,
+      "storeURL": "https://store.steampowered.com/app/10",
       "title": "Counter-Strike",
       "developers": ["Valve"],
       "publishers": ["Valve"],
-      "releaseDate": "2000-11-01",
+
+      // coming soon games may not have one
+      // if it's a free game, price will be 0
       "price": 129.99,
-      "url": "https://store.steampowered.com/app/10"
+
+      // coming soon games may not have one
+      "currency": "ARS",
+
+      // coming soon games may not have one
+      "releaseDate": "2000-11-01"
     },
     ...
   ]
 }
 ```
 
-On the other hand, `temp.json` contains the API calls made, the time they will restart, and the games that failed. With this we can check that the limit established by **[_Steam_ Web API Terms of Use](https://steamcommunity.com/dev/apiterms)** is not exceeded. As well as being able to resume the execution on another day once the limit has been reached.
+On the other hand, `temp.json` contains the API calls made and when they will restart. With this we can check that the limit established by **[_Steam_ Web API Terms of Use](https://steamcommunity.com/dev/apiterms)** is not exceeded.
 
 ## 📝 License
 
@@ -83,9 +98,3 @@ On the other hand, `temp.json` contains the API calls made, the time they will r
 
 Copyright © 2021 _Aguirre Gonzalo Adolfo_.
 This project is _[MIT](LICENSE)_ licensed.
-
----
-
-<div align="center">
-Developed with ❤️ in Argentina 🇦🇷
-</div>

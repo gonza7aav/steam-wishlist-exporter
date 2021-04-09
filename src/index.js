@@ -4,6 +4,7 @@ const showWarning = require('./showWarning');
 const readTempFile = require('./readTempFile');
 const wasBefore = require('./wasBefore');
 const askQuestion = require('./askQuestion');
+const readWishlistFile = require('./readWishlistFile');
 const getWishlist = require('./getWishlist');
 const getRunTime = require('./getRunTime');
 const getGame = require('./getGame');
@@ -14,64 +15,100 @@ const writeWishlistFile = require('./writeWishlistFile');
 const main = async () => {
   await showWarning();
 
-  let { APICalls, reset, username, wishlist } = await readTempFile();
+  const { APICalls, reset } = await readTempFile();
 
-  // APICalls will be used in lot of file, then will be global
+  // this value will be used in several files, so we make it global
   global.APICalls = APICalls;
 
   // has the restart date been reached?
   if (wasBefore(reset)) global.APICalls = 0;
 
-  // if the time limit has passed, reset the counter
-  if (wasAPIReseted(reset)) global.APICalls = 0;
-
-  // check the api limit and do not exceed it
-  if (global.APICalls + wishlist.length > config.MAX_API_CALLS_PER_DAY) {
-    // get the ones that won't be processed to save them for later
-    let exceed = wishlist.slice(config.MAX_API_CALLS_PER_DAY - global.APICalls);
-    exceed.map((appid) => global.pendingGames.push(appid));
+  // check if I have already reached the call limit
+  if (global.APICalls >= config.MAX_API_CALLS_PER_DAY) {
     console.log(
-      `\n${exceed.length} games will be saved for later in order to not exceed the API limit`
+      '\nYou already reached the limit for today. Try again tomorrow'
     );
-
-    // get the ones that will be processed right now
-    wishlist = wishlist.slice(
-      0,
-      config.MAX_API_CALLS_PER_DAY - global.APICalls
-    );
+    process.exit(0);
   }
 
-  try {
-    // if this is not the continuation of the previous run, ask for username
-    if (wishlist.length == 0) {
-      let answer = await askQuestion("\nEnter the SteamID: ");
-      username = answer;
+  // init the global variable which contains the appid that failed
+  global.errors = [];
 
-      // get all the appids of the wishlisted games
-      wishlist = await getWishlist(username);
+  try {
+    const username = await askQuestion('\nEnter the SteamID: ');
+
+    // read the wishlist file of that username
+    // if it doesn't exist, errors & games will be empty arrays
+    const { errors: errorsSaved, games: gamesSaved } = await readWishlistFile(
+      username
+    );
+    const wishlistSaved = gamesSaved.map((x) => x.appid);
+
+    // get all the appids of the wishlisted games
+    let wishlist = await getWishlist(username);
+
+    // filter the complete wishlist of already saved data
+    wishlist = wishlist.filter(
+      (x) => !wishlistSaved.includes(x) && !errorsSaved.includes(x)
+    );
+
+    console.log(`Already saved: ${wishlistSaved.length}`);
+    console.log(`Previous errors: ${errorsSaved.length}`);
+    console.log(`New ones: ${wishlist.length}`);
+
+    // add the errors to the wishlist in order to try again
+    wishlist = [...wishlist, ...errorsSaved];
+
+    // this will be true if the following conditions are met
+    // - the last export had no errors
+    // - the user didn't add new games to his/her wishlist
+    if (wishlist.length == 0) {
+      console.log(
+        `\nYou have already exported ${username}'s wishlist, and there is nothing new`
+      );
+      process.exit(0);
+    }
+
+    // check if this run will exceed the api limit
+    if (global.APICalls + wishlist.length > config.MAX_API_CALLS_PER_DAY) {
+      // those over the limit will be treated as errors
+      const exceed = wishlist.slice(
+        config.MAX_API_CALLS_PER_DAY - global.APICalls
+      );
+      exceed.map((appid) => global.errors.push(appid));
+      console.log(
+        `\n${exceed.length} games will be saved for later in order not to exceed the API limit`
+      );
+
+      // select those which can be processed
+      wishlist = wishlist.slice(
+        0,
+        config.MAX_API_CALLS_PER_DAY - global.APICalls
+      );
     }
 
     // show finish time
     console.log(`\nThis will run for ${getRunTime(wishlist.length)}`);
     await askQuestion('Press Enter to continue');
 
+    // once the wishlist array is ready, fetch them all
     console.log('\nStart getting games info');
     let games = [];
-    for await (let appid of wishlist) {
-      let game = await getGame(appid);
+    for await (const appid of wishlist) {
+      const game = await getGame(appid);
       if (game != null) games.push(game);
       await sleep(config.WAITING_TIME);
     }
 
+    // create/update the temp file
+    await writeTempFile();
+
     // once you have the game details, we will write a file
     await writeWishlistFile(username, games);
 
-    // create/update the temp file
-    await writeTempFile(username);
-
     process.exit(0);
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     process.exit(0);
   }
 };

@@ -6,20 +6,21 @@ const readWishlistFile = require('./readWishlistFile');
 const fs = require('fs/promises');
 
 const writeWishlistFile = async (username, games) => {
-  let today = new Date();
+  const today = new Date();
 
-  let aux = readWishlistFile(username);
-  aux.dateExported = today.toISOString();
-  aux.games = [...aux.games, ...games];
+  let fileSaved = await readWishlistFile(username);
+  fileSaved.dateExported = today.toISOString();
+  fileSaved.errors = global.errors;
+  fileSaved.games = [...fileSaved.games, ...games];
 
   console.log('\nWriting wishlist file...');
 
   // catch the exception when the folder was already created
   await fs.mkdir('results').catch(() => {});
 
-  await fsp.writeFile(
+  await fs.writeFile(
     `results/${username}_wishlist.json`,
-    JSON.stringify(aux, null, 2)
+    JSON.stringify(fileSaved, null, 2)
   );
 
   console.log('Writing wishlist file finished');

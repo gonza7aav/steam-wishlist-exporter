@@ -1,26 +1,23 @@
 const fs = require('fs/promises');
-  try {
-    let {
-      username,
-      dateExported,
-      games,
-    } = require(`../results/${_username}_wishlist.json`);
 
-    return {
-      username: _username,
-      dateExported: dateExported,
-      games: games,
-    };
-  } catch (error) {
+const readWishlistFile = async (_username) => {
+  try {
+    const { username, dateExported, errors, games } = JSON.parse(
+      await fs.readFile(`./results/${_username}_wishlist.json`)
+    );
+
+    return { username, dateExported, errors, games };
+  } catch (err) {
     // if the file didn't exist, instantiate with default values
-    if (error.code == "MODULE_NOT_FOUND") {
+    if (err.code == 'ENOENT') {
       return {
         username: _username,
-        dateExported: "",
+        dateExported: '',
+        errors: [],
         games: [],
       };
     } else {
-      console.error(error);
+      console.error(`\n${err}`);
       process.exit(0);
     }
   }

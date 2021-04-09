@@ -3,22 +3,17 @@
 const axios = require('axios').default;
 
 const getWishlist = async (username) => {
-  global.APICalls++;
-
   try {
     // fetch the user's wishlist page
     const res = await axios
       .get(`https://store.steampowered.com/wishlist/id/${username}`)
       .catch(() => {});
 
-    if (typeof res == undefined || res == null)
-      throw "\nCan't access the wishlist page";
-    if (typeof res.data == undefined || res.data == null)
-      throw "\nCan't access the wishlist page";
+    if (!res?.data) throw "\nCan't access the wishlist page";
 
-    console.log(`${username}'s wishlist page fetched`);
+    console.log(`\n${username}'s wishlist page fetched`);
 
-    // we have the string 'page' with the page content
+    // we have the page content as string in res.data
     // we will use eval() in order to get the wishlist array called 'g_rgWishlistData'
 
     // the definition of an array has the following structure
@@ -26,6 +21,7 @@ const getWishlist = async (username) => {
     // then we need to eval the '[...]' part
 
     // looking for the variable definition, in order to shorter the range of search
+    const indexStart = res.data.indexOf('g_rgWishlistData');
     if (indexStart == -1) throw 'g_rgWishlistData not found';
     let wishlistRaw = res.data.slice(indexStart);
 
@@ -36,20 +32,19 @@ const getWishlist = async (username) => {
     );
 
     // check the result with a regular expression
-    // too much (\s)* in order to accept the ones with a lot of spaces between
-    let regex = /[[](\s)*({(\s)*"appid"(\s)*:(\s)*[0-9]+(\s)*,(\s)*"priority"(\s)*:(\s)*[0-9]+(\s)*,(\s)*"added"(\s)*:(\s)*[0-9]+(\s)*}(\s)*,?(\s)*)+(\s)*]/;
-    if (!regex.test(wishlistRaw)) throw "Invalid wishlist format";
+    const regex = /[[]({"appid":[0-9]+,"priority":[0-9]+,"added":[0-9]+},?)+]/;
+    if (!regex.test(wishlistRaw)) throw 'Invalid wishlist format';
 
-    console.log(`Wishlist data found`);
-
-    let wishlist = eval(wishlistRaw);
+    const wishlist = eval(wishlistRaw);
 
     // the reduced version is the array of appid without priority and added properties
-    let wishlistReduced = wishlist.map((x) => x.appid);
+    const wishlistReduced = wishlist.map((x) => x.appid);
+
+    console.log(`Wishlist data found. ${wishlistReduced.length} games`);
 
     return wishlistReduced;
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     process.exit(0);
   }
 };
