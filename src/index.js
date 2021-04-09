@@ -2,6 +2,7 @@ const config = require('../config.json');
 
 const showWarning = require('./showWarning');
 const readTempFile = require('./readTempFile');
+const wasBefore = require('./wasBefore');
 const askQuestion = require('./askQuestion');
 const getWishlist = require('./getWishlist');
 const getRunTime = require('./getRunTime');
@@ -18,8 +19,8 @@ const main = async () => {
   // APICalls will be used in lot of file, then will be global
   global.APICalls = APICalls;
 
-  // init the global variable which contains the appid that get errors
-  global.pendingGames = [];
+  // has the restart date been reached?
+  if (wasBefore(reset)) global.APICalls = 0;
 
   // if the time limit has passed, reset the counter
   if (wasAPIReseted(reset)) global.APICalls = 0;
