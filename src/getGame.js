@@ -18,8 +18,6 @@ const getGame = async (appid) => {
     // extract the game details
     const appDetails = res.data[appid].data;
 
-    console.log(`${appid} : ${appDetails.name}`);
-
     return new Game(
       appid,
       appDetails.name,
