@@ -11,8 +11,9 @@ const getGame = async (appid) => {
       .get(`https://store.steampowered.com/api/appdetails/?appids=${appid}`)
       .catch(() => {});
 
-    if (!res?.data) throw `API fetch failed appid:${appid}`;
-    if (!res.data[appid].success) throw `API call failed appid:${appid}`;
+    if (!res?.data) throw new Error(`API fetch failed appid:${appid}`);
+    if (!res.data[appid].success)
+      throw new Error(`API call failed appid:${appid}`);
 
     // extract the game details
     const appDetails = res.data[appid].data;

@@ -9,17 +9,17 @@ const readWishlistFile = async (_username) => {
     return { username, dateExported, errors, games };
   } catch (err) {
     // if the file didn't exist, instantiate with default values
-    if (err.code == 'ENOENT') {
+    if (err.code === 'ENOENT') {
       return {
         username: _username,
         dateExported: '',
         errors: [],
         games: [],
       };
-    } else {
-      console.error(`\n${err}`);
-      process.exit(0);
     }
+
+    console.error(`\n${err}`);
+    process.exit(0);
   }
 };
 

@@ -62,7 +62,7 @@ const main = async () => {
     // this will be true if the following conditions are met
     // - the last export had no errors
     // - the user didn't add new games to his/her wishlist
-    if (wishlist.length == 0) {
+    if (wishlist.length === 0) {
       console.log(
         `\nYou have already exported ${username}'s wishlist, and there is nothing new`
       );
@@ -93,7 +93,7 @@ const main = async () => {
 
     // once the wishlist array is ready, fetch them all
     console.log('\nStart getting games info');
-    let games = [];
+    const games = [];
     for await (const appid of wishlist) {
       const game = await getGame(appid);
       if (game != null) games.push(game);

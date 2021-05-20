@@ -15,38 +15,39 @@ class Game {
     this.publishers = publishers;
 
     // if this result -1 the object shouldn't have a price property
-    const priceAux = this.#getPrice(isFree, priceOverview);
-    if (priceAux != -1) {
+    const priceAux = this.getPrice(isFree, priceOverview);
+    if (priceAux !== -1) {
       this.price = priceAux;
       this.currency = priceOverview.currency;
     }
 
     if (!releaseDate.coming_soon) {
-      this.releaseDate = this.#formatDate(releaseDate);
+      this.releaseDate = this.formatDate(releaseDate);
     }
   }
 
-  #getPrice(_isFree, _priceOverview) {
+  getPrice(_isFree, _priceOverview) {
     if (_isFree) return 0;
 
     // this is for game that aren't for selling
-    if (typeof _priceOverview == undefined || _priceOverview == null) return -1;
+    if (typeof _priceOverview === 'undefined' || _priceOverview === null)
+      return -1;
 
     return _priceOverview.initial / 100;
   }
 
   // this will format the date value
-  #formatDate(value) {
+  formatDate(value) {
     const aux = new Date(value);
 
     let str = aux.getUTCFullYear();
-    str += `-${this.#formatNumber(aux.getUTCMonth() + 1)}`;
-    str += `-${this.#formatNumber(aux.getUTCDate())}`;
+    str += `-${this.formatNumber(aux.getUTCMonth() + 1)}`;
+    str += `-${this.formatNumber(aux.getUTCDate())}`;
 
     return str;
   }
 
-  #formatNumber(n) {
+  formatNumber(n) {
     if (n < 10) {
       return `0${n}`;
     }

@@ -15,15 +15,15 @@ const readTempFile = async () => {
     };
   } catch (err) {
     // if the file doesn't exist, return the default values
-    if (err.code == 'ENOENT') {
+    if (err.code === 'ENOENT') {
       return {
         APICalls: 0,
         reset: new Date(2000, 0, 1),
       };
-    } else {
-      console.error(`\n${err}`);
-      process.exit(0);
     }
+
+    console.error(`\n${err}`);
+    process.exit(0);
   }
 };
 
