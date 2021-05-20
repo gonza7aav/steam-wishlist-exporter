@@ -9,7 +9,7 @@ const getWishlist = async (username) => {
       .get(`https://store.steampowered.com/wishlist/id/${username}`)
       .catch(() => {});
 
-    if (!res?.data) throw "\nCan't access the wishlist page";
+    if (!res?.data) throw new Error("\nCan't access the wishlist page");
 
     console.log(`\n${username}'s wishlist page fetched`);
 
@@ -22,7 +22,7 @@ const getWishlist = async (username) => {
 
     // looking for the variable definition, in order to shorter the range of search
     const indexStart = res.data.indexOf('g_rgWishlistData');
-    if (indexStart == -1) throw 'g_rgWishlistData not found';
+    if (indexStart === -1) throw new Error('g_rgWishlistData not found');
     let wishlistRaw = res.data.slice(indexStart);
 
     // we add 1 to the upper limit in order to include the ']' character
@@ -33,7 +33,7 @@ const getWishlist = async (username) => {
 
     // check the result with a regular expression
     const regex = /[[]({"appid":[0-9]+,"priority":[0-9]+,"added":[0-9]+},?)+]/;
-    if (!regex.test(wishlistRaw)) throw 'Invalid wishlist format';
+    if (!regex.test(wishlistRaw)) throw new Error('Invalid wishlist format');
 
     const wishlist = eval(wishlistRaw);
 

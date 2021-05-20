@@ -4,7 +4,7 @@ const writeTempFile = async () => {
   // tomorrow = today in ms + 1 day in ms
   const tomorrow = new Date(Date.now() + 1000 * 60 * 60 * 24);
 
-  let aux = {
+  const aux = {
     APICalls: global.APICalls,
     reset: tomorrow,
   };
