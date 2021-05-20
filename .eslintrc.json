@@ -9,16 +9,17 @@
     "ecmaVersion": 12
   },
   "rules": {
-    "implicit-arrow-linebreak": "off",
     "class-methods-use-this": "warn",
     "comma-dangle": "warn",
-    "curly": "warn",
-    "nonblock-statement-body-position": "warn",
-    "no-plusplus": "off",
-    "no-console": "off",
     "consistent-return": "warn",
+    "curly": "warn",
+    "implicit-arrow-linebreak": "off",
+    "linebreak-style": "off",
+    "no-console": "off",
     "no-eval": "off",
+    "no-plusplus": "off",
     "no-restricted-syntax": "off",
+    "nonblock-statement-body-position": "warn",
     "object-curly-newline": "off"
   }
 }
