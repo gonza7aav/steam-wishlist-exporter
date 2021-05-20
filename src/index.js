@@ -11,6 +11,7 @@ const getGame = require('./getGame');
 const sleep = require('./sleep');
 const writeTempFile = require('./writeTempFile');
 const writeWishlistFile = require('./writeWishlistFile');
+const printProgressBar = require('./printProgressBar');
 
 const main = async () => {
   await showWarning();
@@ -94,9 +95,12 @@ const main = async () => {
     // once the wishlist array is ready, fetch them all
     console.log('\nStart getting games info');
     const games = [];
+    let progress = 0;
     for await (const appid of wishlist) {
       const game = await getGame(appid);
       if (game != null) games.push(game);
+
+      printProgressBar(++progress, wishlist.length);
       await sleep(config.WAITING_TIME);
     }
 
