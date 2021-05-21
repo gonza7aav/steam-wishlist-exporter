@@ -22,7 +22,7 @@ class Game {
     }
 
     if (!releaseDate.coming_soon) {
-      this.releaseDate = this.formatDate(releaseDate);
+      this.releaseDate = this.formatDate(releaseDate.date);
     }
   }
 
