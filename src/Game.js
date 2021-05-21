@@ -18,7 +18,7 @@ class Game {
     const priceAux = this.getPrice(isFree, priceOverview);
     if (priceAux !== -1) {
       this.price = priceAux;
-      this.currency = priceOverview.currency;
+      if (priceAux !== 0) this.currency = priceOverview.currency;
     }
 
     if (!releaseDate.coming_soon) {
