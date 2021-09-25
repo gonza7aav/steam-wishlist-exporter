@@ -1,8 +1,13 @@
-// returns the games appid in the user's wishlist as an array
-
 const axios = require('axios').default;
 
-const getWishlist = async (username) => {
+interface IWishlist {
+  readonly appid: string;
+  readonly priority: string;
+  readonly added: string;
+}
+
+// returns the games appid in the user's wishlist as an array
+export default async (username: string): Promise<Array<number>> => {
   try {
     // fetch the user's wishlist page
     const res = await axios
@@ -11,7 +16,7 @@ const getWishlist = async (username) => {
 
     if (!res?.data) throw new Error("\nCan't access the wishlist page");
 
-    console.log(`\n${username}'s wishlist page fetched`);
+    console.log('\nWishlist page fetched');
 
     // we have the page content as string in res.data
     // we will use eval() in order to get the wishlist array called 'g_rgWishlistData'
@@ -35,18 +40,18 @@ const getWishlist = async (username) => {
     const regex = /[[]({"appid":[0-9]+,"priority":[0-9]+,"added":[0-9]+},?)+]/;
     if (!regex.test(wishlistRaw)) throw new Error('Invalid wishlist format');
 
-    const wishlist = eval(wishlistRaw);
+    const wishlist: Array<IWishlist> = eval(wishlistRaw);
 
-    // the reduced version is the array of appid without priority and added properties
-    const wishlistReduced = wishlist.map((x) => x.appid);
+    // a reduced version is the array of appid without "priority" and "added" properties
+    const appids = wishlist.map((x: IWishlist) => Number.parseInt(x.appid, 10));
 
-    console.log(`Wishlist data found. ${wishlistReduced.length} games`);
+    console.log(`Wishlist data found (${appids.length} elements)`);
 
-    return wishlistReduced;
+    return appids;
   } catch (err) {
     console.error(err);
     process.exit(0);
   }
-};
 
-module.exports = getWishlist;
+  return [];
+};
