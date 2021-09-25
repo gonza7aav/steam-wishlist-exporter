@@ -2,11 +2,11 @@
 
 <div align="center">
 
-![Release en GitHub](https://img.shields.io/github/v/release/gonza7aav/steam-wishlist-exporter?label=release&color=informational)
-![Tamaño del repositorio de GitHub](https://img.shields.io/github/repo-size/gonza7aav/steam-wishlist-exporter?label=tamaño&color=informational)
-![Licencia del repositorio](https://img.shields.io/github/license/gonza7aav/steam-wishlist-exporter?label=licencia&color=informational)
+![Versión en NPM](https://img.shields.io/npm/v/steam-wishlist-exporter)
+![Descargas en NPM](https://img.shields.io/npm/dt/steam-wishlist-exporter)
+![Licencia en NPM](https://img.shields.io/npm/l/steam-wishlist-exporter)
 
-[![Read me in English](https://img.shields.io/badge/Read%20me%20in-English-brightgreen)](README.en.md)
+[![Read me in English](https://img.shields.io/badge/Read%20me%20in-English-brightgreen)](README.md)
 
 </div>
 
