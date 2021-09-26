@@ -1,6 +1,6 @@
 {
   "name": "steam-wishlist-exporter",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A tool to export the wishlist of a Steam account",
   "homepage": "https://github.com/gonza7aav/steam-wishlist-exporter#readme",
   "bugs": {
@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "author": "Aguirre Gonzalo Adolfo <gonza.a.aguirre@gmail.com> (https://github.com/gonza7aav)",
-  "bin": "./lib/src/bin/steam-wishlist-exporter.js",
+  "bin": "./lib/bin/steam-wishlist-exporter.js",
   "files": [
     "lib/*",
     "README.*.md"
