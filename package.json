@@ -1,6 +1,6 @@
 {
   "name": "steam-wishlist-exporter",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "A tool to export the wishlist of a Steam account",
   "homepage": "https://github.com/gonza7aav/steam-wishlist-exporter#readme",
   "bugs": {

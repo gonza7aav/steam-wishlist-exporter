@@ -14,10 +14,6 @@
 
 Una herramienta para exportar la lista de deseados de una cuenta de _Steam_
 
-## 🚧 Requisitos
-
-- _[Node.js](https://nodejs.org/)_
-
 ## 🚀 Ejecución
 
 Antes de exportar, deberías leer los **[Términos de Uso de _Steam_ Web API](https://steamcommunity.com/dev/apiterms)**

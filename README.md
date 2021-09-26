@@ -14,10 +14,6 @@
 
 A tool to export the wishlist of a _Steam_ account
 
-## 🚧 Prerequisites
-
-- _[Node.js](https://nodejs.org/)_
-
 ## 🚀 Usage
 
 Before exporting, you should read the **[_Steam_ Web API Terms of Use](https://steamcommunity.com/dev/apiterms)**.
