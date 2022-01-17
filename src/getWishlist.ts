@@ -19,11 +19,11 @@ export default async (username: string): Promise<Array<number>> => {
     console.log('\nWishlist page fetched');
 
     // we have the page content as string in res.data
-    // we will use eval() in order to get the wishlist array called 'g_rgWishlistData'
+    // we will parse as JSON in order to get the wishlist array called 'g_rgWishlistData'
 
     // the definition of an array has the following structure
     // var/const/let name_of_the_array = [...]
-    // then we need to eval the '[...]' part
+    // then we need to parse the '[...]' part
 
     // looking for the variable definition, in order to shorter the range of search
     const indexStart = res.data.indexOf('g_rgWishlistData');
@@ -40,7 +40,7 @@ export default async (username: string): Promise<Array<number>> => {
     const regex = /[[]({"appid":[0-9]+,"priority":[0-9]+,"added":[0-9]+},?)+]/;
     if (!regex.test(wishlistRaw)) throw new Error('Invalid wishlist format');
 
-    const wishlist: Array<IWishlist> = eval(wishlistRaw);
+    const wishlist: Array<IWishlist> = JSON.parse(wishlistRaw);
 
     // a reduced version is the array of appid without "priority" and "added" properties
     const appids = wishlist.map((x: IWishlist) => Number.parseInt(x.appid, 10));
