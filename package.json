@@ -31,7 +31,7 @@
   ],
   "dependencies": {
     "@types/cli-progress": "3.9.2",
-    "axios": "0.21.4",
+    "axios": "0.24.0",
     "cli-progress": "3.9.1",
     "commander": "8.2.0",
     "wait": "0.4.2"
